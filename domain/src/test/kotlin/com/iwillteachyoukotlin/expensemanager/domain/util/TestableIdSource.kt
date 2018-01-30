@@ -2,10 +2,10 @@ package com.iwillteachyoukotlin.expensemanager.domain.util
 
 import java.util.*
 
-class TestableIdSource {
+class TestableIdSource : IdSource {
     var lastId: String = ""
 
-    fun generateId(): String {
+    override fun generateId(): String {
         val id = UUID.randomUUID().toString()
         lastId = id
         return id

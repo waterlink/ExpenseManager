@@ -1,5 +1,6 @@
 package com.iwillteachyoukotlin.expensemanager.domain.expense
 
+import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.domain.util.TestableIdSource
 import org.junit.Assert.*
 import org.junit.Test
@@ -12,6 +13,7 @@ class EnterExpenseUseCaseTest {
     fun `James can enter expense`() {
         val idSource = TestableIdSource()
         val expenseRepository = InMemoryExpenseRepository()
+        val taskExecutor = DirectTaskExecutor()
 
         // Given expense data
         val expenseData = ExpenseData(
@@ -24,7 +26,12 @@ class EnterExpenseUseCaseTest {
         )
 
         // When James enters that expense data
-        val useCase = EnterExpenseUseCase()
+        val useCase = EnterExpenseUseCase(
+                expenseRepository = expenseRepository,
+                taskExecutor = taskExecutor,
+                idSource = idSource
+        )
+
         val result = useCase.enterExpense(expenseData)
 
         result.onSuccess { enteredExpense ->
