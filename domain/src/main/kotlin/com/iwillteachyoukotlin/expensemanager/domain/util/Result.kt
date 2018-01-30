@@ -1,11 +1,25 @@
 package com.iwillteachyoukotlin.expensemanager.domain.util
 
 class Result<T> {
-    fun onSuccess(block: (T) -> Unit) {
 
+    private var resolvedValue: T? = null
+
+    private var onSuccessBlock: ((T) -> Unit)? = null
+
+    fun onSuccess(block: (T) -> Unit) {
+        onSuccessBlock = block
+        resolvedValue?.let(block)
     }
 
+    private var isResolved = false
+
     fun isResolved(): Boolean {
-        return true
+        return isResolved
+    }
+
+    fun resolve(value: T) {
+        isResolved = true
+        resolvedValue = value
+        onSuccessBlock?.invoke(value)
     }
 }
