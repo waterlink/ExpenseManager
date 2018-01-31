@@ -2,6 +2,7 @@ package com.iwillteachyoukotlin.expensemanager.presentation.expense
 
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.*
+import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.assertion.ViewAssertions.*
 import android.support.test.espresso.matcher.ViewMatchers
@@ -29,6 +30,9 @@ class EnterExpenseFeatureInstrumentedTest {
                 .check(matches(isDisplayed()))
 
         // When I tap on “Add Expense” button
+        onView(withId(R.id.add_expense_button))
+                .perform(click())
+
         // Then I see the form with the fields:
         //
         // - Date (defaults to today for convenience)
