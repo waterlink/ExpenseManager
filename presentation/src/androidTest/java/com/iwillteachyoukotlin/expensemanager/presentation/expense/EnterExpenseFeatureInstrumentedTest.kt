@@ -13,8 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 @RunWith(AndroidJUnit4::class)
@@ -24,7 +23,7 @@ class EnterExpenseFeatureInstrumentedTest {
     var activityRule: ActivityTestRule<HomeActivity> =
             ActivityTestRule(HomeActivity::class.java)
 
-    private val today = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+    private val today = Calendar.getInstance().toString()
 
     private val decimalFormat = NumberFormat.getInstance()
 
@@ -60,11 +59,11 @@ class EnterExpenseFeatureInstrumentedTest {
                 .check(matches(withSpinnerText("EUR")))
 
         // - Needs reimbursement (check box)
-        onView(withId(R.id.expense_reimbursement_checkbox))
+        onView(withId(R.id.expense_reimbursement_switch))
                 .check(matches(isNotChecked()))
 
         // - Client-related (check box)
-        onView(withId(R.id.expense_client_related_checkbox))
+        onView(withId(R.id.expense_client_related_switch))
                 .check(matches(isNotChecked()))
 
         // - Comment

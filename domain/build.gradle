@@ -5,3 +5,10 @@ dependencies {
 
     testCompile "junit:junit:4.12"
 }
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
