@@ -12,6 +12,7 @@ import com.iwillteachyoukotlin.expensemanager.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.text.DateFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -23,7 +24,9 @@ class EnterExpenseFeatureInstrumentedTest {
     var activityRule: ActivityTestRule<HomeActivity> =
             ActivityTestRule(HomeActivity::class.java)
 
-    private val today = Calendar.getInstance().toString()
+    private val dateFormat = DateFormat.getDateInstance()
+    private val calendar = Calendar.getInstance()
+    private val today = dateFormat.format(calendar.time)
 
     private val decimalFormat = NumberFormat.getInstance()
 
@@ -42,13 +45,13 @@ class EnterExpenseFeatureInstrumentedTest {
                 .check(matches(isDisplayed()))
 
         // - Date (defaults to today for convenience)
-        val dateType = TYPE_CLASS_DATETIME and TYPE_DATETIME_VARIATION_DATE
+        val dateType = TYPE_CLASS_DATETIME or TYPE_DATETIME_VARIATION_DATE
         onView(withId(R.id.expense_date_input))
                 .check(matches(withInputType(dateType)))
                 .check(matches(withText(today)))
 
         // - Amount
-        val decimalType = TYPE_CLASS_NUMBER and TYPE_NUMBER_FLAG_DECIMAL
+        val decimalType = TYPE_CLASS_NUMBER or TYPE_NUMBER_FLAG_DECIMAL
         onView(withId(R.id.expense_amount_input))
                 .check(matches(withInputType(
                         decimalType)))
