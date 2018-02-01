@@ -135,7 +135,13 @@ class EnterExpenseFeatureInstrumentedTest {
                 .check(matches(withText(expectedComment)))
 
         // And I tap on “Save” button
+        onView(withId(R.id.expense_save_button))
+                .perform(click())
+
         // Then I see the “Expense Details” screen
+        onView(withId(R.id.expense_details_screen))
+                .check(matches(isDisplayed()))
+
         // And I see all the data I’ve entered
     }
 }
