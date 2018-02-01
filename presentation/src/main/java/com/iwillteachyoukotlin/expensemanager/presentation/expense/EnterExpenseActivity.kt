@@ -1,6 +1,7 @@
 package com.iwillteachyoukotlin.expensemanager.presentation.expense
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -62,5 +63,10 @@ class EnterExpenseActivity : AppCompatActivity() {
         val formattedDate = dateFormat.format(calendar.time)
 
         expense_date_input.setText(formattedDate)
+    }
+
+    fun onSaveButtonClick(view: View) {
+        val intent = Intent(this, ShowExpenseDetailsActivity::class.java)
+        startActivity(intent)
     }
 }
