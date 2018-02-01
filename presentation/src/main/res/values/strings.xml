@@ -2,6 +2,7 @@
     <string name="app_name">Expense Manager</string>
     <string name="needs_reimbursement">Needs reimursement</string>
     <string name="client_related">Client related</string>
+    <string name="pick_expense_date">Pick date</string>
     <string-array name="currency_entries">
         <item>EUR</item>
     </string-array>

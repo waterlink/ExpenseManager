@@ -16,6 +16,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="date"
+        android:onClick="onDateInputClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
