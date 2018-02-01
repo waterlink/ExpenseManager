@@ -2,8 +2,7 @@ package com.iwillteachyoukotlin.expensemanager.presentation.expense
 
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.action.ViewActions.typeText
+import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.PickerActions
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -105,7 +104,7 @@ class EnterExpenseFeatureInstrumentedTest {
         val expectedAmount = 17.30
         val formattedAmount = decimalFormat.format(expectedAmount)
         onView(withId(R.id.expense_amount_input))
-                .perform(typeText(formattedAmount))
+                .perform(clearText(), typeText(formattedAmount))
                 .check(matches(withText(formattedAmount)))
 
         // - Currency drop down = EUR
