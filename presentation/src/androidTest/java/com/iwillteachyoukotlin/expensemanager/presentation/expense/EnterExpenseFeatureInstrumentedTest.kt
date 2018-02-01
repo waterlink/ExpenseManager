@@ -143,5 +143,24 @@ class EnterExpenseFeatureInstrumentedTest {
                 .check(matches(isDisplayed()))
 
         // And I see all the data I’ve entered
+        // - Date = yesterday
+        onView(withId(R.id.expense_details_date))
+                .check(matches(withText(yesterday)))
+
+        // - Cost = 17.30 EUR
+        onView(withId(R.id.expense_details_cost))
+                .check(matches(withText("$formattedAmount EUR")))
+
+        // - Needs reimbursement = yes
+        onView(withId(R.id.expense_details_needs_reimbursement))
+                .check(matches(withText("Needs reimbursement")))
+
+        // - Client related = yes
+        onView(withId(R.id.expense_details_client_related))
+                .check(matches(withText("Client related")))
+
+        // - Comment = “taxi to the airport”
+        onView(withId(R.id.expense_details_comment))
+                .check(matches(withText("taxi to the airport")))
     }
 }
