@@ -7,6 +7,10 @@ class InMemoryExpenseRepository : ExpenseRepository {
         expenses.add(expense)
     }
 
+    override fun find(id: String): Expense? {
+        return expenses.find { it.id == id }
+    }
+
     fun findAllExpenses(): List<Expense> {
         return expenses
     }
