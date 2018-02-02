@@ -7,9 +7,9 @@ import com.iwillteachyoukotlin.expensemanager.domain.util.TaskExecutor
 class EnterExpenseUseCase(
         private val expenseRepository: ExpenseRepository,
         private val taskExecutor: TaskExecutor,
-        private val idSource: IdSource) {
+        private val idSource: IdSource) : EnterExpenseUseCaseProtocol {
 
-    fun enterExpense(expenseData: ExpenseData): Result<EnteredExpense> {
+    override fun enterExpense(expenseData: ExpenseData): Result<EnteredExpense> {
         return taskExecutor.execute {
 
             val cost = Money(
