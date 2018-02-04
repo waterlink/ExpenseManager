@@ -24,7 +24,7 @@ import java.util.*
 import java.util.Calendar.*
 import kotlin.math.roundToInt
 
-open class EnterExpenseActivity : AppCompatActivity() {
+class EnterExpenseActivity : AppCompatActivity() {
 
     private lateinit var navigator: Navigator
 

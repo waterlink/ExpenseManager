@@ -6,7 +6,9 @@
     <string name="date_title">Date</string>
     <string name="cost_title">Cost</string>
     <string name="expense_needs_no_reimbursement">No reimbursement needed</string>
+    <string name="expense_needs_reimbursement">Reimbursement needed</string>
     <string name="expense_not_client_related">Not client related</string>
+    <string name="expense_client_related">Client related</string>
     <string name="no_value">–</string>
     <string name="comment_title">Comment</string>
     <string-array name="currency_entries">
