@@ -32,7 +32,7 @@ class ShowExpenseDetailsActivityTest {
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
     private val defaultDateFormatter = DateFormat.getDateInstance()
 
-    private val decimalFormat = NumberFormat.getInstance()
+    private val currencyFormat = NumberFormat.getCurrencyInstance()
 
     private val expense_details_date = mock(TextView::class.java)
     private val expense_details_cost = mock(TextView::class.java)
@@ -77,8 +77,9 @@ class ShowExpenseDetailsActivityTest {
         val formattedDate = defaultDateFormatter.format(parsedDate)
         verify(expense_details_date).text = formattedDate
 
-        val amount = decimalFormat.format(17.75)
-        verify(expense_details_cost).text = "$amount EUR"
+        currencyFormat.currency = java.util.Currency.getInstance("EUR")
+        val cost = currencyFormat.format(17.75)
+        verify(expense_details_cost).text = cost
 
         verify(expense_details_needs_reimbursement)
                 .setText(R.string.expense_needs_reimbursement)

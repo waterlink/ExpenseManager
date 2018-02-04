@@ -34,6 +34,7 @@ class EnterExpenseFeatureInstrumentedTest {
     private val today = dateFormat.format(calendar.time)
 
     private val decimalFormat = NumberFormat.getInstance()
+    private val currencyFormat = NumberFormat.getCurrencyInstance()
 
     @Test
     fun jamesCanEnterExpense() {
@@ -147,9 +148,11 @@ class EnterExpenseFeatureInstrumentedTest {
         onView(withId(R.id.expense_details_date))
                 .check(matches(withText(yesterday)))
 
-        // - Cost = 17.30 EUR
+        // - Cost = EUR17.30
+        currencyFormat.currency = Currency.getInstance("EUR")
+        val formattedAsCurrency = currencyFormat.format(expectedAmount)
         onView(withId(R.id.expense_details_cost))
-                .check(matches(withText("$formattedAmount EUR")))
+                .check(matches(withText(formattedAsCurrency)))
 
         // - Needs reimbursement = yes
         onView(withId(R.id.expense_details_needs_reimbursement))

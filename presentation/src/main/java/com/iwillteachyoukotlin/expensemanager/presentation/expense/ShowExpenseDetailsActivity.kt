@@ -78,32 +78,17 @@ open class ShowExpenseDetailsActivity : AppCompatActivity() {
     private fun renderExpenseDetails(expenseDetails: ExpenseDetails?) {
         expenseDetails ?: return
 
-        val dateFormatter = DateFormat.getDateInstance()
-        val date = dateFormatter.format(expenseDetails.date)
-        expense_details_date_view.text = date
+        val presenter = ExpenseDetailsPresenter(expenseDetails)
 
-        val decimalFormatter = NumberFormat.getInstance()
-        val amount = decimalFormatter.format(expenseDetails.cost.cents / 100.0)
-        val currency = expenseDetails.cost.currency.name
-        expense_details_cost_view.text = "$amount $currency"
+        expense_details_date_view.text = presenter.date
+        expense_details_cost_view.text = presenter.cost
+        expense_details_comment_view.text = presenter.comment
 
-        val needsReimbursementMessage =
-                if (expenseDetails.needsReimbursement)
-                    R.string.expense_needs_reimbursement
-                else
-                    R.string.expense_needs_no_reimbursement
         expense_details_needs_reimbursement_view
-                .setText(needsReimbursementMessage)
+                .setText(presenter.reimbursementLabel)
 
-        val clientRelatedMessage =
-                if (expenseDetails.clientRelated)
-                    R.string.expense_client_related
-                else
-                    R.string.expense_not_client_related
         expense_details_client_related_view
-                .setText(clientRelatedMessage)
-
-        expense_details_comment_view.text = expenseDetails.comment
+                .setText(presenter.clientRelatedLabel)
     }
 
 }
