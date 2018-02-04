@@ -6,9 +6,10 @@ import com.iwillteachyoukotlin.expensemanager.presentation.expense.ShowExpenseDe
 
 object RealNavigator : Navigator {
 
-    override fun showExpenseDetails(context: Context) {
-         val intent = Intent(context, ShowExpenseDetailsActivity::class.java)
-         context.startActivity(intent)
+    override fun showExpenseDetails(context: Context, expenseId: String) {
+        val intent = Intent(context, ShowExpenseDetailsActivity::class.java)
+        intent.putExtra("expenseId", expenseId)
+        context.startActivity(intent)
     }
 
 }

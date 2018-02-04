@@ -92,5 +92,12 @@ class EnterExpenseActivityTest {
         assertEquals(expectedSavedExpense, enterExpenseUseCase.savedExpense)
     }
 
+    @Test
+    fun onSaveButtonClick_passesExpenseIdToShowExpenseDetails() {
+        activity.onSaveButtonClick(View(activity))
+
+        val expectedExpenseId = "generated-expense-id"
+        assertEquals(expectedExpenseId, navigator.shownExpenseDetailsWithExpenseId)
+    }
 }
 

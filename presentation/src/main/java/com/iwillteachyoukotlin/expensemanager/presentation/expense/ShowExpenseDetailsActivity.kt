@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.iwillteachyoukotlin.expensemanager.R
+import com.iwillteachyoukotlin.expensemanager.data.expense.InMemoryExpenseRepository
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ExpenseDetails
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ShowExpenseDetailsUseCase
+import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
+import kotlinx.android.synthetic.main.activity_show_expense_details.*
 import java.text.DateFormat
 import java.text.NumberFormat
 
@@ -45,6 +48,25 @@ open class ShowExpenseDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_expense_details)
+
+        val showExpenseDetailsUseCase = ShowExpenseDetailsUseCase(
+                InMemoryExpenseRepository.instance,
+                DirectTaskExecutor()
+        )
+        withShowExpenseDetailsUseCase(showExpenseDetailsUseCase)
+
+        withViews(
+                expense_details_date,
+                expense_details_cost,
+                expense_details_needs_reimbursement,
+                expense_details_client_related,
+                expense_details_comment
+        )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        fetchAndShowExpenseDetails()
     }
 
     internal fun fetchAndShowExpenseDetails() {

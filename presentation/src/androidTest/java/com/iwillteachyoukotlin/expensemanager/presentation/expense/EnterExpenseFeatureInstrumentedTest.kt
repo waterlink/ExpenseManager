@@ -153,11 +153,11 @@ class EnterExpenseFeatureInstrumentedTest {
 
         // - Needs reimbursement = yes
         onView(withId(R.id.expense_details_needs_reimbursement))
-                .check(matches(withText("Needs reimbursement")))
+                .check(matches(withText(R.string.expense_needs_reimbursement)))
 
         // - Client related = yes
         onView(withId(R.id.expense_details_client_related))
-                .check(matches(withText("Client related")))
+                .check(matches(withText(R.string.expense_client_related)))
 
         // - Comment = “taxi to the airport”
         onView(withId(R.id.expense_details_comment))

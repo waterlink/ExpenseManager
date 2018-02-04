@@ -9,10 +9,10 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Switch
 import com.iwillteachyoukotlin.expensemanager.R
+import com.iwillteachyoukotlin.expensemanager.data.expense.InMemoryExpenseRepository
 import com.iwillteachyoukotlin.expensemanager.domain.expense.EnterExpenseUseCase
 import com.iwillteachyoukotlin.expensemanager.domain.expense.EnterExpenseUseCaseProtocol
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ExpenseData
-import com.iwillteachyoukotlin.expensemanager.domain.expense.InMemoryExpenseRepository
 import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.domain.util.UUIDSource
 import com.iwillteachyoukotlin.expensemanager.presentation.util.Navigator
@@ -82,7 +82,7 @@ class EnterExpenseActivity : AppCompatActivity() {
         )
 
         withEnterExpenseUseCase(EnterExpenseUseCase(
-                InMemoryExpenseRepository(),
+                InMemoryExpenseRepository.instance,
                 DirectTaskExecutor(),
                 UUIDSource()
         ))
@@ -142,9 +142,11 @@ class EnterExpenseActivity : AppCompatActivity() {
                 needsReimbursement = expense_reimbursement_switch_view.isChecked,
                 clientRelated = expense_client_related_switch_view.isChecked
         )
-        enterExpenseUseCase.enterExpense(expenseData)
 
-        navigator.showExpenseDetails(this)
+        enterExpenseUseCase.enterExpense(expenseData)
+                .onSuccess { enteredExpense ->
+                    navigator.showExpenseDetails(this, enteredExpense.id)
+                }
     }
 
     private fun parseDate(string: String): Date {
