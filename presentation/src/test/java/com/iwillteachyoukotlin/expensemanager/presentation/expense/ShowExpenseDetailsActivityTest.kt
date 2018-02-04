@@ -62,20 +62,14 @@ class ShowExpenseDetailsActivityTest {
     @Test
     fun onStart_obtainsExpenseDetails_andShowsThemInTheView() {
 
-        given(intent.getStringExtra("expenseId"))
-                .willReturn("expected-expense-id")
-
-        given(showExpenseDetailsUseCase
-                .showExpenseDetails("expected-expense-id"))
-                .willReturn(DirectTaskExecutor().execute {
-                    ExpenseDetails(
-                            comment = "a comment",
-                            date = dateFormatter.parse("2018-02-04"),
-                            cost = Money(1775, Currency.EUR),
-                            needsReimbursement = true,
-                            clientRelated = false
-                    )
-                })
+        givenExpenseDetails(
+                expenseId = "expected-expense-id",
+                comment = "a comment",
+                date = "2018-02-04",
+                cost = Money(1775, Currency.EUR),
+                needsReimbursement = true,
+                clientRelated = false
+        )
 
         activity.fetchAndShowExpenseDetails()
 
@@ -94,5 +88,49 @@ class ShowExpenseDetailsActivityTest {
 
         verify(expense_details_comment).text = "a comment"
 
+    }
+
+    @Test
+    fun onStart_whenNoReimbursementNeeded() {
+        givenExpenseDetails(needsReimbursement = false)
+
+        activity.fetchAndShowExpenseDetails()
+
+        verify(expense_details_needs_reimbursement)
+                .setText(R.string.expense_needs_no_reimbursement)
+    }
+
+    @Test
+    fun onStart_whenClientRelated() {
+        givenExpenseDetails(clientRelated = true)
+
+        activity.fetchAndShowExpenseDetails()
+
+        verify(expense_details_client_related)
+                .setText(R.string.expense_client_related)
+    }
+
+    private fun givenExpenseDetails(
+            expenseId: String = "expected-expense-id",
+            comment: String = "a comment",
+            date: String = "2018-02-04",
+            cost: Money = Money(1775, Currency.EUR),
+            needsReimbursement: Boolean = false,
+            clientRelated: Boolean = false) {
+
+        given(intent.getStringExtra("expenseId"))
+                .willReturn(expenseId)
+
+        given(showExpenseDetailsUseCase
+                .showExpenseDetails(expenseId))
+                .willReturn(DirectTaskExecutor().execute {
+                    ExpenseDetails(
+                            comment = comment,
+                            date = dateFormatter.parse(date),
+                            cost = cost,
+                            needsReimbursement = needsReimbursement,
+                            clientRelated = clientRelated
+                    )
+                })
     }
 }

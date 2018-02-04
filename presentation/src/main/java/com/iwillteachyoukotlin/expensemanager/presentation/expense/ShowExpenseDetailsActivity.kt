@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.iwillteachyoukotlin.expensemanager.R
+import com.iwillteachyoukotlin.expensemanager.domain.expense.ExpenseDetails
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ShowExpenseDetailsUseCase
+import java.text.DateFormat
+import java.text.NumberFormat
 
 open class ShowExpenseDetailsActivity : AppCompatActivity() {
 
@@ -45,7 +48,40 @@ open class ShowExpenseDetailsActivity : AppCompatActivity() {
     }
 
     internal fun fetchAndShowExpenseDetails() {
+        val expenseId = intent.getStringExtra("expenseId")
+        showExpenseDetailsUseCase.showExpenseDetails(expenseId)
+                .onSuccess(this::renderExpenseDetails)
+    }
 
+    private fun renderExpenseDetails(expenseDetails: ExpenseDetails?) {
+        expenseDetails ?: return
+
+        val dateFormatter = DateFormat.getDateInstance()
+        val date = dateFormatter.format(expenseDetails.date)
+        expense_details_date_view.text = date
+
+        val decimalFormatter = NumberFormat.getInstance()
+        val amount = decimalFormatter.format(expenseDetails.cost.cents / 100.0)
+        val currency = expenseDetails.cost.currency.name
+        expense_details_cost_view.text = "$amount $currency"
+
+        val needsReimbursementMessage =
+                if (expenseDetails.needsReimbursement)
+                    R.string.expense_needs_reimbursement
+                else
+                    R.string.expense_needs_no_reimbursement
+        expense_details_needs_reimbursement_view
+                .setText(needsReimbursementMessage)
+
+        val clientRelatedMessage =
+                if (expenseDetails.clientRelated)
+                    R.string.expense_client_related
+                else
+                    R.string.expense_not_client_related
+        expense_details_client_related_view
+                .setText(clientRelatedMessage)
+
+        expense_details_comment_view.text = expenseDetails.comment
     }
 
 }
