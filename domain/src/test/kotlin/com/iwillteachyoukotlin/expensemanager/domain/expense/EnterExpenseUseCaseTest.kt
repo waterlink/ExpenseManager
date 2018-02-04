@@ -4,10 +4,11 @@ import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.domain.util.TestableIdSource
 import org.junit.Assert.*
 import org.junit.Test
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 
 class EnterExpenseUseCaseTest {
+
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
     @Test
     fun `James can enter expense`() {
@@ -18,7 +19,7 @@ class EnterExpenseUseCaseTest {
         // Given expense data
         val expenseData = ExpenseData(
                 comment = "Lunch meeting with client",
-                date = LocalDate.parse("2018-01-29", DateTimeFormatter.ISO_DATE),
+                date = dateFormatter.parse("2018-01-29"),
                 cents = 3500,
                 currency = "EUR",
                 needsReimbursement = true,

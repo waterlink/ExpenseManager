@@ -1,9 +1,9 @@
 package com.iwillteachyoukotlin.expensemanager.domain.expense
 
-import java.time.LocalDate
+import java.util.*
 
 data class ExpenseDetails(val comment: String,
-                          val date: LocalDate,
+                          val date: Date,
                           val cost: Money,
                           val needsReimbursement: Boolean,
                           val clientRelated: Boolean) {

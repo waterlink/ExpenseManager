@@ -4,10 +4,11 @@ import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.domain.util.TestableIdSource
 import org.junit.Assert.*
 import org.junit.Test
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 
 class ShowExpenseDetailsUseCaseTest {
+
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
 
     private val idSource = TestableIdSource()
     private val expenseRepository = InMemoryExpenseRepository()
@@ -20,7 +21,7 @@ class ShowExpenseDetailsUseCaseTest {
         val expense = Expense(
                 id = expenseId,
                 comment = "taxi from airport to the hotel",
-                date = LocalDate.parse("2018-01-30", DateTimeFormatter.ISO_DATE),
+                date = dateFormatter.parse("2018-01-30"),
                 cost = Money(1350, Currency.EUR),
                 needsReimbursement = true,
                 clientRelated = true
