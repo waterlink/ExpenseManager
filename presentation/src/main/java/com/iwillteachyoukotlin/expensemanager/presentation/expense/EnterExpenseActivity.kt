@@ -20,8 +20,6 @@ import com.iwillteachyoukotlin.expensemanager.presentation.util.RealNavigator
 import kotlinx.android.synthetic.main.activity_enter_expense.*
 import java.text.DateFormat
 import java.text.NumberFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Calendar.*
 import kotlin.math.roundToInt
@@ -149,8 +147,10 @@ open class EnterExpenseActivity : AppCompatActivity() {
         navigator.showExpenseDetails(this)
     }
 
-    private fun parseDate(string: String) =
-            LocalDate.parse(string, DateTimeFormatter.ISO_DATE)
+    private fun parseDate(string: String): Date {
+        val dateFormatter = DateFormat.getDateInstance()
+        return dateFormatter.parse(string)
+    }
 
     private fun amountToCents(amount: String) =
             (amount.toDouble() * 100).roundToInt()

@@ -13,9 +13,13 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.mock
-import java.time.LocalDate
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class EnterExpenseActivityTest {
+
+    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
+    private val defaultDateFormatter = DateFormat.getDateInstance()
 
     private val navigator = MockNavigator()
     private val enterExpenseUseCase = MockEnterExpenseUseCase()
@@ -45,7 +49,9 @@ class EnterExpenseActivityTest {
         given(expense_comment_input.text)
                 .willReturn(comment)
 
-        val date = makeEditable("2017-09-21")
+        val parsedDate = dateFormatter.parse("2017-09-21")
+        val formattedDate = defaultDateFormatter.format(parsedDate)
+        val date = makeEditable(formattedDate)
         given(expense_date_input.text)
                 .willReturn(date)
 
@@ -77,7 +83,7 @@ class EnterExpenseActivityTest {
 
         val expectedSavedExpense = ExpenseData(
                 comment = "a comment",
-                date = LocalDate.of(2017, 9, 21),
+                date = dateFormatter.parse("2017-09-21"),
                 cents = 1999,
                 currency = "EUR",
                 needsReimbursement = true,
