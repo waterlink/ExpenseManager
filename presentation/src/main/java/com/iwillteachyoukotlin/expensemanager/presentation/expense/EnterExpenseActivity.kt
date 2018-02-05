@@ -11,7 +11,6 @@ import android.widget.Switch
 import com.iwillteachyoukotlin.expensemanager.R
 import com.iwillteachyoukotlin.expensemanager.data.expense.InMemoryExpenseRepository
 import com.iwillteachyoukotlin.expensemanager.domain.expense.EnterExpenseUseCase
-import com.iwillteachyoukotlin.expensemanager.domain.expense.EnterExpenseUseCaseProtocol
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ExpenseData
 import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.domain.util.UUIDSource
@@ -33,10 +32,10 @@ class EnterExpenseActivity : AppCompatActivity() {
         return this
     }
 
-    private lateinit var enterExpenseUseCase: EnterExpenseUseCaseProtocol
+    private lateinit var enterExpenseUseCase: EnterExpenseUseCase
 
     internal fun withEnterExpenseUseCase(
-            enterExpenseUseCase: EnterExpenseUseCaseProtocol)
+            enterExpenseUseCase: EnterExpenseUseCase)
             : EnterExpenseActivity {
         this.enterExpenseUseCase = enterExpenseUseCase
         return this

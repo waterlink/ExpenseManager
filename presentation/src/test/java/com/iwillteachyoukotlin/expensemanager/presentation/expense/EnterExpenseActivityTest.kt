@@ -4,8 +4,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Switch
+import com.iwillteachyoukotlin.expensemanager.domain.expense.EnterExpenseUseCase
+import com.iwillteachyoukotlin.expensemanager.domain.expense.EnteredExpense
 import com.iwillteachyoukotlin.expensemanager.domain.expense.ExpenseData
+import com.iwillteachyoukotlin.expensemanager.domain.util.DirectTaskExecutor
 import com.iwillteachyoukotlin.expensemanager.presentation.util.MockNavigator
+import com.iwillteachyoukotlin.expensemanager.presentation.util.any
 import com.iwillteachyoukotlin.expensemanager.presentation.util.makeEditable
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -13,6 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -22,7 +27,7 @@ class EnterExpenseActivityTest {
     private val defaultDateFormatter = DateFormat.getDateInstance()
 
     private val navigator = MockNavigator()
-    private val enterExpenseUseCase = MockEnterExpenseUseCase()
+    private val enterExpenseUseCase = mock(EnterExpenseUseCase::class.java)
 
     private val expense_comment_input = mock(EditText::class.java)
     private val expense_date_input = mock(EditText::class.java)
@@ -68,6 +73,11 @@ class EnterExpenseActivityTest {
 
         given(expense_client_related_switch.isChecked)
                 .willReturn(false)
+
+        given(enterExpenseUseCase.enterExpense(any()))
+                .willReturn(DirectTaskExecutor().execute {
+                    EnteredExpense("generated-expense-id")
+                })
     }
 
     @Test
@@ -89,7 +99,7 @@ class EnterExpenseActivityTest {
                 needsReimbursement = true,
                 clientRelated = false
         )
-        assertEquals(expectedSavedExpense, enterExpenseUseCase.savedExpense)
+        verify(enterExpenseUseCase).enterExpense(expectedSavedExpense)
     }
 
     @Test
